@@ -1,9 +1,13 @@
 const API = 'https://avwx.rest/api/metar/';
 
-const icaoCode = "SUMU";
+
+
 
 function traerMetar(funcion) {
-fetch(`${API}/${icaoCode}`, {
+    let icaoInput = document.getElementById("buscador")
+    let icaoCode = icaoInput.value;
+
+    fetch(`${API}/${icaoCode}`, {
     method: "GET",
     headers: {
         "Authorization": "teTvrLx_-0c9XaWNWpr2qzJEia4gxlft5kRekDBp8Pg",
