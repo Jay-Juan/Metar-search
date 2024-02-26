@@ -1,18 +1,18 @@
 const API = 'https://avwx.rest/api/metar/';
 
 
-function traerMetar(funcion) {
+async function traerMetar(funcion) {
     let icaoInput = document.getElementById("buscador")
     let icaoCode = icaoInput.value;
 
-    fetch(`${API}/${icaoCode}`, {
+    const response = await fetch(`${API}/${icaoCode}`, {
         mode: "cors",
         method: "GET",
         headers: {
             "Authorization": "teTvrLx_-0c9XaWNWpr2qzJEia4gxlft5kRekDBp8Pg",
         }
     })
-        .then(response => response.json())
+        const data = await response.json()
         ///////////////////////////////////////////////////////////////////////////////////////////
         .then(data => { funcion(data); console.log(API + icaoCode + ".json"); });
     // para ver el metar en consola
@@ -24,17 +24,23 @@ function mostrarMetar(info) {
     const contenedor = document.getElementById("container")
     let icaoInput = document.getElementById("buscador")
     let icaoCode = icaoInput.value;
-    Object.values(info).forEach(metar => {
-        contenedor.innerHTML += `
-        <div>
-            <p>${metar.raw}</p>
-            <br>
-            <p>${icaoCode.toUpperCase()}&nbsp${metar.time.repr}&nbsp${metar.wind_direction.repr}${metar.wind_speed.repr}KT&nbsp${metar.visibility.repr}&nbsp${metar.temperature.repr}/${metar.dewpoint.repr}&nbsp${metar.altimeter.repr}</p>
-        </div>
-        ` 
+    var html = `
+    <div>
+    <p>${info.raw}</p>
+    <br>
+    <p>${icaoCode.toUpperCase()}&nbsp${info.time.repr}&nbsp${info.wind_direction.repr}${info.wind_speed.repr}KT&nbsp${info.visibility.repr}&nbsp
+    `
+    info.clouds.forEach(function (nube) {
+        html += `
+        ${nube.repr}&nbsp
+        `
     });
-    
-    //${info.}&nbsp                                                                          ${info.}&nbsp                                                                                               ${info.}&nbsp                                      ${info.}&nbsp 
+    html += `
+    ${info.temperature.repr}/${info.dewpoint.repr}&nbsp${info.altimeter.repr}</p>
+    </div>
+    `
+    //                                                                       ${info.}&nbsp                                                                                               ${info.}&nbsp                                      ${info.}&nbsp 
+    contenedor.innerHTML = html
 }
 
 document.addEventListener("DOMContentLoaded", () => {
