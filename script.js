@@ -14,24 +14,27 @@ function traerMetar(funcion) {
     })
         .then(response => response.json())
         ///////////////////////////////////////////////////////////////////////////////////////////
-        .then(data => {funcion(data); console.log(API + icaoCode + ".json");});
-        // para ver el metar en consola
-        //.then(json => console.log(json))
-        ///////////////////////////////////////////////////////////////////////////////////////////
+        .then(data => { funcion(data); console.log(API + icaoCode + ".json"); });
+    // para ver el metar en consola
+    //.then(json => console.log(json))
+    ///////////////////////////////////////////////////////////////////////////////////////////
 }
 
 function mostrarMetar(info) {
     let contenedor = document.getElementById("container")
     let icaoInput = document.getElementById("buscador")
     let icaoCode = icaoInput.value;
+    var cloud = info.clouds.forEach(function (nube) {
+       nube.repr
+    });
     contenedor.innerHTML = `
     <div>
         <p>${info.raw}</p>
         <br>
-        <p>${icaoCode.toUpperCase()}&nbsp${info.time.repr}&nbsp${info.wind_direction.repr}${info.wind_speed.repr}KT&nbsp${info.visibility.repr}&nbsp${info.temperature.repr}/${info.dewpoint.repr}&nbsp${info.altimeter.repr}</p>
+        <p>${icaoCode.toUpperCase()}&nbsp${info.time.repr}&nbsp${info.wind_direction.repr}${info.wind_speed.repr}KT&nbsp${info.visibility.repr}&nbsp${cloud}&nbsp${info.temperature.repr}/${info.dewpoint.repr}&nbsp${info.altimeter.repr}</p>
     </div>
     `
-    //${info.}&nbsp
+    //${info.}&nbsp                                                                          ${info.}&nbsp                                                                                               ${info.}&nbsp                                      ${info.}&nbsp 
 }
 
 document.addEventListener("DOMContentLoaded", () => {
