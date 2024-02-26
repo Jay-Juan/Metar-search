@@ -28,11 +28,11 @@ function mostrarMetar(info) {
     <div>
     <p>${info.raw}</p>
     <br>
-    <p>${icaoCode.toUpperCase()}&nbsp${info.time.repr}&nbsp${info.wind_direction.repr}${info.wind_speed.repr}KT&nbsp${info.visibility.repr}&nbsp
+    <p>${icaoCode.toUpperCase()}&nbsp${info.time.repr}&nbsp${info.wind_direction.repr}${info.wind_speed.repr}KT&nbsp${info.visibility.repr}
     `
     info.clouds.forEach(function (nube) {
         html += `
-        ${nube.repr}&nbsp
+        ${nube.repr}
         `
     });
     html += `
