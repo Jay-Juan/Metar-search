@@ -21,19 +21,19 @@ function traerMetar(funcion) {
 }
 
 function mostrarMetar(info) {
-    let contenedor = document.getElementById("container")
+    const contenedor = document.getElementById("container")
     let icaoInput = document.getElementById("buscador")
     let icaoCode = icaoInput.value;
-    var cloud = info.clouds.forEach(function (nube) {
-       nube.repr
+    Object.values(info).forEach(metar => {
+        contenedor.innerHTML += `
+        <div>
+            <p>${metar.raw}</p>
+            <br>
+            <p>${icaoCode.toUpperCase()}&nbsp${metar.time.repr}&nbsp${metar.wind_direction.repr}${metar.wind_speed.repr}KT&nbsp${metar.visibility.repr}&nbsp${metar.temperature.repr}/${metar.dewpoint.repr}&nbsp${metar.altimeter.repr}</p>
+        </div>
+        ` 
     });
-    contenedor.innerHTML = `
-    <div>
-        <p>${info.raw}</p>
-        <br>
-        <p>${icaoCode.toUpperCase()}&nbsp${info.time.repr}&nbsp${info.wind_direction.repr}${info.wind_speed.repr}KT&nbsp${info.visibility.repr}&nbsp${cloud}&nbsp${info.temperature.repr}/${info.dewpoint.repr}&nbsp${info.altimeter.repr}</p>
-    </div>
-    `
+    
     //${info.}&nbsp                                                                          ${info.}&nbsp                                                                                               ${info.}&nbsp                                      ${info.}&nbsp 
 }
 
