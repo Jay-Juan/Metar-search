@@ -12,12 +12,8 @@ async function traerMetar(funcion) {
             "Authorization": "teTvrLx_-0c9XaWNWpr2qzJEia4gxlft5kRekDBp8Pg",
         }
     })
-        const data = await response.json()
-        ///////////////////////////////////////////////////////////////////////////////////////////
-        .then(data => { funcion(data); console.log(API + icaoCode + ".json"); });
-    // para ver el metar en consola
-    //.then(json => console.log(json))
-    ///////////////////////////////////////////////////////////////////////////////////////////
+    await response.json()
+        .then(data => { funcion(data); console.log(data); });
 }
 
 function mostrarMetar(info) {
@@ -30,16 +26,21 @@ function mostrarMetar(info) {
     <br>
     <p>${icaoCode.toUpperCase()}&nbsp${info.time.repr}&nbsp${info.wind_direction.repr}${info.wind_speed.repr}KT&nbsp${info.visibility.repr}
     `
+    info.wx_codes.forEach(function (weather) {
+        html += `
+        ${weather.repr}
+        `
+    });
     info.clouds.forEach(function (nube) {
         html += `
         ${nube.repr}
         `
     });
     html += `
-    ${info.temperature.repr}/${info.dewpoint.repr}&nbsp${info.altimeter.repr}</p>
+    ${info.temperature.repr}/${info.dewpoint.repr}&nbsp${info.altimeter.repr}&nbsp${info.remarks}</p>
     </div>
     `
-    //                                                                       ${info.}&nbsp                                                                                               ${info.}&nbsp                                      ${info.}&nbsp 
+    // ${info.}&nbsp
     contenedor.innerHTML = html
 }
 
