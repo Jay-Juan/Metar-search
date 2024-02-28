@@ -20,12 +20,35 @@ function mostrarMetar(info) {
     const contenedor = document.getElementById("container")
     let icaoInput = document.getElementById("buscador")
     let icaoCode = icaoInput.value;
+    let visibility = info.visibility.repr 
     var html = `
     <div>
     <p>${info.raw}</p>
     <br>
-    <p>${icaoCode.toUpperCase()}&nbsp${info.time.repr}&nbsp${info.wind_direction.repr}${info.wind_speed.repr}KT&nbsp${info.visibility.repr}
+    <p>${icaoCode.toUpperCase()}&nbsp${info.time.repr}
     `
+
+    if (info.wind_gust) {
+        html += `
+        ${info.wind_direction.repr}${info.wind_speed.repr}G${info.wind_gust.repr}KT
+        `
+    } else {
+        html += `
+        ${info.wind_direction.repr}${info.wind_speed.repr}KT
+        `
+    }
+
+
+    if (visibility.length < 4) {
+        html += `
+        ${info.visibility.repr}SM
+        `
+    } else {
+        html += `
+        ${info.visibility.repr}
+        `
+    }
+
     info.wx_codes.forEach(function (weather) {
         html += `
         ${weather.repr}
@@ -60,5 +83,3 @@ document.addEventListener("DOMContentLoaded", () => {
         }
     });
 })
-
-// buscar los tipos de nubes que hayan disponibles y mostrarlos
